@@ -1,20 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %}Create a new post{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
 
-{% if user.is_authenticated %}
-<h1>Add post</h1>
+<h1>Login</h1>
 <br/><br/>
 
 <div class="mb-3">
     <form method="POST">
         {% csrf_token %}
         {{form.as_p}}
-        <button class="btn btn-dark">Post</button>
+        <button class="btn btn-dark">Login</button>
     </form>
 </div>
-{% endif %}
 
 {% endblock %}

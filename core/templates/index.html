@@ -4,8 +4,24 @@
 <h1>Post</h1>
 <ul>
     {% for post in object_list reversed %}
-        <li><a href="{% url 'article-detail' post.pk %}">{{post.title}}</a> - {{post.author.first_name}} {{post.author.last_name}}<br/>
-        {{post.body}}</li>
+        <li>
+            <a href="{% url 'article_detail' post.pk %}">
+            {{post.title}}
+            </a>- {{post.author.first_name}} {{post.author.last_name}} {{post.post_date}}<br/>
+            {{post.body}}
+            {{post.body |slice:":100"}}
+
+            {% if user.is_authenticated %}
+            {% if user == post.author %}
+            <a href="{% url 'update_post' post.pk %}">
+                <small>(Edit)</small>
+            </a>
+            <a href="{% url 'delete_post' post.pk %}">
+                <small>(Remove)</small>
+            </a>
+            {% endif %}
+            {% endif %}
+        </li>
     {% endfor %}
 </ul>
 {% endblock %}

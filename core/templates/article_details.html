@@ -6,7 +6,21 @@
 {% block content %}
 
     <h1>{{post.title}}</h1>
-    <small>By: {{post.author.first_name}} {{post.author.last_name}}</small><br/>
+    <small>
+        By: {{post.author.first_name}} {{post.author.last_name}} -
+        {{post.post_date}}
+        {% if user.is_authenticated %}
+            {% if user == post.author %}
+            <a href="{% url 'update_post' post.pk %}">
+                <small>(Edit)</small>
+            </a>
+            <a href="{% url 'delete_post' post.pk %}">
+                <small>(Remove)</small>
+            </a>
+        {% endif %}
+        {% endif %}
+    </small>
+    <br/>
     <hr>
     <br/>
     {{post.body}}
