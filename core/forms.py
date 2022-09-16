@@ -12,7 +12,6 @@ class PostForm(forms.ModelForm):
             'author': forms.Select(attrs={'class': 'form-control'}),
             'category': forms.Select(choices=[item for item in Category.objects.all().values_list('name', 'name')],
                                      attrs={'class': 'form-control'}),
-            # 'category': forms.Select(choices=forms.ModelChoiceField(queryset=Category.objects.all()), attrs={'class': 'form-control'}),
             'body': forms.Textarea(attrs={'class': 'form-control'}),
         }
 

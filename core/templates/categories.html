@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Category: {{category}}</h1>
+    {% if category_posts  %}
+    <ul>
+        {% for post in category_posts %}
+            <li>
+                <a href="{% url 'article_detail' post.pk %}">
+                {{post.title}} - {{post.category}}
+                </a>- {{post.author}} {{post.author.first_name}} {{post.author.last_name}} {{post.post_date}}<br/>
+                {{post.body|slice:":100"|safe}}
+
+                {% if user.is_authenticated %}
+                {% if user == post.author %}
+                <a href="{% url 'update_post' post.pk %}">
+                    <small>(Edit)</small>
+                </a>
+                <a href="{% url 'delete_post' post.pk %}">
+                    <small>(Remove)</small>
+                </a>
+                {% endif %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <h1>There is no results for searched category {{category}}</h1>
+    {% endif %}
+{% endblock %}
