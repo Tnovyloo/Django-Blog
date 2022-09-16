@@ -7,13 +7,20 @@ from django.urls import reverse_lazy
 class HomeView(ListView):
     model = Post
     template_name = 'index.html'
-    # ordering = ['-id']
     ordering = ['post_date']
+    cats = Category.objects.all()
+
+    def get_context_data(self, *args, **kwargs):
+        category_menu = Category.objects.all()
+        context = super(HomeView, self).get_context_data(*args, **kwargs)
+        # context = {"category_menu": category_menu}
+        context["category_menu"] = category_menu
+        return context
 
 def CategoryView(request, category):
-    category_posts = Post.objects.filter(category=category)
+    category_posts = Post.objects.filter(category=category.replace('-', ''))
     return render(request, 'categories.html', {'category_posts': category_posts,
-                                               'category': category})
+                                               'category': category.replace('-', ' ')})
 
 class ArticleDetailView(DetailView):
     model = Post

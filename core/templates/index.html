@@ -5,9 +5,9 @@
 <ul>
     {% for post in object_list reversed %}
         <li>
-            <a href="{% url 'article_detail' post.pk %}">
-            {{post.title}} - {{post.category}}
-            </a>- {{post.author}} {{post.author.first_name}} {{post.author.last_name}} {{post.post_date}}<br/>
+            <a href="{% url 'article_detail' post.pk %}">{{post.title}}</a>
+            <a href="{% url 'category' post.category %}">{{post.category}}</a>
+            - {{post.author}} {{post.author.first_name}} {{post.author.last_name}} {{post.post_date}}<br/>
             {{post.body|slice:":100"|safe}}
 
             {% if user.is_authenticated %}
@@ -23,4 +23,5 @@
         </li>
     {% endfor %}
 </ul>
+
 {% endblock %}
