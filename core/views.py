@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post
-from .forms import PostForm, UpdatePostForm
+from .models import Post, Category
+from .forms import PostForm, UpdatePostForm, AddCategoryForm
 from django.urls import reverse_lazy
 
 class HomeView(ListView):
     model = Post
     template_name = 'index.html'
     # ordering = ['-id']
-    ordering = ['-post_date']
+    ordering = ['post_date']
 
 class ArticleDetailView(DetailView):
     model = Post
@@ -21,9 +21,10 @@ class AddPostView(CreateView):
     # fields = '__all__' #we dont have to use it when we did a form
     # # fields = ('title', 'body', 'title_tag')
 
-    # def form_valid(self, form):
-    #     form.instance.owner = self.request.user
-    #     return super().form_valid(form)
+class AddCategoryView(CreateView):
+    model = Category
+    template_name = 'add_category.html'
+    form_class = AddCategoryForm
 
 class UpdatePostView(UpdateView):
     model = Post

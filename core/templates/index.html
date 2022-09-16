@@ -6,10 +6,9 @@
     {% for post in object_list reversed %}
         <li>
             <a href="{% url 'article_detail' post.pk %}">
-            {{post.title}}
-            </a>- {{post.author.first_name}} {{post.author.last_name}} {{post.post_date}}<br/>
-            {{post.body}}
-            {{post.body |slice:":100"}}
+            {{post.title}} - {{post.category}}
+            </a>- {{post.author}} {{post.author.first_name}} {{post.author.last_name}} {{post.post_date}}<br/>
+            {{post.body|slice:":100"|safe}}
 
             {% if user.is_authenticated %}
             {% if user == post.author %}

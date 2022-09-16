@@ -23,7 +23,7 @@
     <br/>
     <hr>
     <br/>
-    {{post.body}}
+    {{post.body|safe }}
     <br/><br/>
     <a href="{% url 'index' %}" class="btn btn-light">Back</a>
 
