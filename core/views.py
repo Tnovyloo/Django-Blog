@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category
 from .forms import PostForm, UpdatePostForm, AddCategoryForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
 
 class HomeView(ListView):
     model = Post
@@ -10,21 +11,46 @@ class HomeView(ListView):
     ordering = ['post_date']
     cats = Category.objects.all()
 
-    def get_context_data(self, *args, **kwargs):
-        category_menu = Category.objects.all()
-        context = super(HomeView, self).get_context_data(*args, **kwargs)
-        # context = {"category_menu": category_menu}
-        context["category_menu"] = category_menu
-        return context
+    # def get_context_data(self, *args, **kwargs):
+    #     category_menu = Category.objects.all()
+    #     context = super(HomeView, self).get_context_data(*args, **kwargs)
+    #     # context = {"category_menu": category_menu}
+    #     context["category_menu"] = category_menu
+    #     return context
 
-def CategoryView(request, category):
+def category_view(request, category):
     category_posts = Post.objects.filter(category=category.replace('-', ''))
     return render(request, 'categories.html', {'category_posts': category_posts,
                                                'category': category.replace('-', ' ')})
 
+def like_view(request, pk):
+    post = get_object_or_404(Post, id=request.POST['post_id'])
+    liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        liked = False
+    else:
+        post.likes.add(request.user)
+        liked = True
+
+    return HttpResponseRedirect(reverse('article_detail', args=[str(pk)]))
+
 class ArticleDetailView(DetailView):
     model = Post
     template_name = 'article_details.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        post_object = get_object_or_404(Post, id=self.kwargs['pk'])
+        total_likes = post_object.total_likes()
+        liked = False
+        if post_object.likes.filter(id=self.request.user.id).exists():
+            liked = True
+
+        context['total_likes'] = total_likes
+        context['liked'] = liked
+
+        return context
 
 class AddPostView(CreateView):
     model = Post
