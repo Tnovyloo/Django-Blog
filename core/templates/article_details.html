@@ -25,7 +25,6 @@
     <br/>
     {{post.body|safe }}
     <br/><br/>
-    <hr>
     <br>
     <form action="{% url 'like_post' post.pk %}" method="POST">
         {% csrf_token %}
@@ -37,7 +36,15 @@
         {% endif %}
     </form>
     <br>
-    <hr>
     <a href="{% url 'index' %}" class="btn btn-light">Back</a>
-
+    <hr>
+    <br>
+    <div class="card" style="width: 18rem;">
+      <img src="{{post.author.profile.profile_pic.url}}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{post.author.username}}</h5>
+            <p class="card-text">{{post.author.profile.bio}}</p>
+            <a href="..." class="btn btn-primary">Go somewhere</a>
+          </div>
+    </div>
 {% endblock %}
