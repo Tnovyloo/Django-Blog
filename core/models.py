@@ -24,7 +24,7 @@ class Post(models.Model):
     body = models.TextField()
     post_date = models.DateField(auto_now_add=True)
     category = models.CharField(max_length=255, default='unknown')
-    # category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
 
     def __str__(self):
         return self.title + '|' + str(self.author)

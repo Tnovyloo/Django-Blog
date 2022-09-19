@@ -11,7 +11,7 @@
             {{post.body|slice:":100"|safe}}
 
             {% if user.is_authenticated %}
-            {% if user == post.author %}
+            {% if user.id == post.author.id %}
             <a href="{% url 'update_post' post.pk %}">
                 <small>(Edit)</small>
             </a>
