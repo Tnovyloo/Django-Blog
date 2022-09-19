@@ -6,9 +6,8 @@
     {% for post in object_list reversed %}
         <li>
             <a href="{% url 'article_detail' post.pk %}">{{post.title}}</a>
-            <a href="{% url 'category' post.category %}">{{post.category}}</a>
-            - {{post.author}} {{post.author.first_name}} {{post.author.last_name}} {{post.post_date}}<br/>
-            {{post.body|slice:":100"|safe}}
+            - {{post.author}} {{post.author.first_name}} {{post.author.last_name}} {{post.post_date}}
+            <a href="{% url 'category' post.category %}">{{post.category}}</a><br/>
 
             {% if user.is_authenticated %}
             {% if user.id == post.author.id %}
@@ -20,6 +19,8 @@
             </a>
             {% endif %}
             {% endif %}
+
+            {{post.snippet|safe}}
         </li>
     {% endfor %}
 </ul>
