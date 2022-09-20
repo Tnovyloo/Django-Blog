@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>User Profile</h1>
+<h1>{{profile_object.user}}</h1>
+{% if profile_object.user.id == user.id %}
+<p><a href="{% url 'edit_profile_page' profile_object.id %}">Edit profile</a></p>
+{% else %}
+<p></p>
+{% endif %}
 
-{{ profile_object }}
+
     <div class="card" style="width: 18rem;">
       <img src="{{profile_object.profile_pic.url}}" class="card-img-top" alt="...">
           <div class="card-body">

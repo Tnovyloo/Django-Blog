@@ -1,6 +1,21 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django import forms
+from core.models import Profile
+
+class UpdateProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('bio', 'profile_pic', 'social_link1', 'social_link2', 'social_link3')
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateProfileForm, self).__init__(*args, **kwargs)
+        self.fields['bio'].widget.attrs['class'] = 'form-control'
+        self.fields['profile_pic'].widget.attrs['class'] = 'form-control'
+        self.fields['social_link1'].widget.attrs['class'] = 'form-control'
+        self.fields['social_link2'].widget.attrs['class'] = 'form-control'
+        self.fields['social_link3'].widget.attrs['class'] = 'form-control'
+
 
 class MyUserCreationForm(UserCreationForm):
     email = forms.EmailField()

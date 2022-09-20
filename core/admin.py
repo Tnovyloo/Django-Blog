@@ -6,12 +6,16 @@ from django.contrib.auth.models import User
 # Register your models here.
 admin.site.register(Post)
 admin.site.register(Category)
-admin.site.register(Profile)
+# admin.site.register(Profile)
 
-# class ProfileInline(admin.StackedInline):
-#     model = Profile
-#     can_delete = False
-#     verbose_name_plural = 'profile'
-#
-# class UserAdmin(BaseUserAdmin):
-#     inlines = [ProfileInline]
+class ProfileInline(admin.StackedInline):
+    model = Profile
+    can_delete = False
+    verbose_name_plural = 'profile'
+
+class UserAdmin(BaseUserAdmin):
+    inlines = [ProfileInline]
+
+
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)

@@ -1,11 +1,26 @@
 from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.views import PasswordChangeView
-from .forms import MyUserCreationForm, MyUserAuthenticationForm, MyUserChangeForm, MyPasswordChangeForm
+from .forms import MyUserCreationForm, MyUserAuthenticationForm, MyUserChangeForm, MyPasswordChangeForm,\
+    UpdateProfileForm
 from django.urls import reverse_lazy
-from django.views.generic import DetailView
+from django.views.generic import DetailView, UpdateView, CreateView
 from core.models import Profile
 from django.shortcuts import get_object_or_404
+
+class EditProfilePageView(UpdateView):
+    model = Profile
+    template_name = 'registration/edit_profile_page.html'
+    form_class = UpdateProfileForm
+    success_url = reverse_lazy('index')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(EditProfilePageView, self).get_context_data(**kwargs)
+        profile_object = get_object_or_404(Profile, id=self.kwargs['pk'])
+
+        context['profile_object'] = profile_object
+
+        return context
 
 class ShowProfilePageView(DetailView):
     model = Profile
@@ -24,20 +39,28 @@ class PasswordsChangeView(PasswordChangeView):
     template_name = 'registration/change-password.html'
     success_url = reverse_lazy('index')
 
-class UserRegisterView(generic.CreateView):
+class UserRegisterView(CreateView):
     form_class = MyUserCreationForm
     template_name = 'registration/register.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('edit_profile_page')
 
-class UserLoginView(generic.CreateView):
+class UserLoginView(CreateView):
     form_class = MyUserAuthenticationForm
     template_name = 'registration/login.html'
     success_url = reverse_lazy('')
 
-class UserEditView(generic.UpdateView):
+class UserEditView(UpdateView):
     form_class = MyUserChangeForm
     template_name = 'registration/edit_profile.html'
     success_url = reverse_lazy('index')
 
     def get_object(self, queryset=None):
         return self.request.user
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(UserEditView, self).get_context_data(**kwargs)
+        profile_object = get_object_or_404(Profile, id=self.kwargs['pk'])
+
+        context['profile_object'] = profile_object
+
+        return context
