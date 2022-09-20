@@ -52,15 +52,26 @@ class MyUserCreationForm(UserCreationForm):
 
 
 class MyUserAuthenticationForm(AuthenticationForm):
-    class Meta:
-        model = User
-        fields = ('username', 'password')
-
     def __init__(self, *args, **kwargs):
         super(MyUserAuthenticationForm, self).__init__(*args, **kwargs)
 
-        self.fields['username'].widget.attrs['class'] = 'form-control'
-        self.fields['password'].widget.attrs['class'] = 'form-control'
+        self.fields['username'].widget = forms.widgets.TextInput(attrs={
+                'class': 'form-control'
+            })
+        self.fields['password'].widget = forms.widgets.PasswordInput(attrs={
+                'class': 'form-control'
+            })
+
+    # class Meta:
+    #     model = User
+    #     fields = ('username', 'password')
+    #
+    # def __init__(self, *args, **kwargs):
+    #     super(MyUserAuthenticationForm, self).__init__(*args, **kwargs)
+    #
+    #     self.fields['username'].widget.attrs['class'] = 'form-control'
+    #     self.fields['password'].widget.attrs['class'] = 'form-control'
+
 
 class MyUserChangeForm(UserChangeForm):
     class Meta:

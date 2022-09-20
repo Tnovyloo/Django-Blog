@@ -5,6 +5,7 @@ from .forms import MyUserCreationForm, MyUserAuthenticationForm, MyUserChangeFor
     UpdateProfileForm, CreateProfileForm
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, UpdateView, CreateView
+from django.contrib.auth.views import LoginView
 from core.models import Profile
 from django.shortcuts import get_object_or_404
 
