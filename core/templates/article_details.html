@@ -39,6 +39,7 @@
     <a href="{% url 'index' %}" class="btn btn-light">Back</a>
     <hr>
     <br>
+    {% if post.author.profile %}
     <div class="card" style="width: 18rem;">
       <img src="{{post.author.profile.profile_pic.url}}" class="card-img-top" alt="...">
           <div class="card-body">
@@ -47,4 +48,5 @@
             <a href="{% url 'show_profile_page' post.author.profile.id %}" class="btn btn-primary">Go to profile</a>
           </div>
     </div>
+    {% endif %}
 {% endblock %}

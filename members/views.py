@@ -2,11 +2,23 @@ from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.views import PasswordChangeView
 from .forms import MyUserCreationForm, MyUserAuthenticationForm, MyUserChangeForm, MyPasswordChangeForm,\
-    UpdateProfileForm
+    UpdateProfileForm, CreateProfileForm
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, UpdateView, CreateView
 from core.models import Profile
 from django.shortcuts import get_object_or_404
+
+class CreateProfilePageView(CreateView):
+    model = Profile
+    template_name = 'registration/create_profile_page.html'
+    form_class = CreateProfileForm
+    success_url = reverse_lazy('index')
+
+    # To sent User into Create profile form while creating profile which needs a User.
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
 class EditProfilePageView(UpdateView):
     model = Profile
@@ -42,7 +54,7 @@ class PasswordsChangeView(PasswordChangeView):
 class UserRegisterView(CreateView):
     form_class = MyUserCreationForm
     template_name = 'registration/register.html'
-    success_url = reverse_lazy('edit_profile_page')
+    success_url = reverse_lazy('login')
 
 class UserLoginView(CreateView):
     form_class = MyUserAuthenticationForm

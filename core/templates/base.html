@@ -43,9 +43,13 @@
                         Settings
                       </a>
                       <ul class="dropdown-menu">
+                          {% if user.profile %}
                           <li><a class="dropdown-item" href="{% url 'show_profile_page' user.profile.id %}">Show profile page</a></li>
                           <li><a class="dropdown-item" href="{% url 'edit_profile_page' user.profile.id %}">Edit profile page</a></li>
                           <li><a class="dropdown-item" href="{% url 'edit_profile' user.profile.id %}">Edit Account settings</a></li>
+                          {% else %}
+                          <li><a class="dropdown-item" href="{% url 'create_profile_page' %}">Create profile</a></li>
+                          {% endif %}
                       </ul>
                   </li>
 
