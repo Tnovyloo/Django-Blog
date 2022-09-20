@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>User Profile</h1>
+
+{{ profile_object }}
+    <div class="card" style="width: 18rem;">
+      <img src="{{profile_object.profile_pic.url}}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{profile_object.username}}</h5>
+            <p class="card-text">{{profile_object.bio}}</p>
+          </div>
+    </div>
+{% endblock %}

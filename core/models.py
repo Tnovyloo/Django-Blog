@@ -16,7 +16,6 @@ class Profile(models.Model):
     social_link2 = models.CharField(max_length=255, null=True, blank=True)
     social_link3 = models.CharField(max_length=255, null=True, blank=True)
 
-
     def __str__(self):
         return str(self.user)
 
