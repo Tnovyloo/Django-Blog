@@ -49,4 +49,23 @@
           </div>
     </div>
     {% endif %}
+    <br>
+    <hr>
+    <h2>Comments</h2>
+    {% if not post.comments.all %}
+    No comments yet.
+    {% else %}
+        <a href="">Add comment</a>
+        {% for comment in post.comments.all %}
+        <div class="card">
+          <div class="card-body">
+            {{comment.body}}
+          </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+    <br>
+    <br>
+    <br>
+
 {% endblock %}

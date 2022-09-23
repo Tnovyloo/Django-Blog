@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post, Category
-from .forms import PostForm, UpdatePostForm, AddCategoryForm
+from .models import Post, Category, Comment
+from .forms import PostForm, UpdatePostForm, AddCategoryForm, AddCommentForm
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 
@@ -52,6 +52,18 @@ class ArticleDetailView(DetailView):
 
         return context
 
+
+class AddCommentView(CreateView):
+    model = Comment
+    form_class = AddCommentForm
+    template_name = 'add_post_comment.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post = self.kwargs['[k']
+        return super().form_valid(form)
+
+
 class AddPostView(CreateView):
     model = Post
     form_class = PostForm
@@ -61,10 +73,12 @@ class AddPostView(CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
+
 class AddCategoryView(CreateView):
     model = Category
     template_name = 'add_category.html'
     form_class = AddCategoryForm
+
 
 class UpdatePostView(UpdateView):
     model = Post
