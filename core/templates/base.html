@@ -23,21 +23,22 @@
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'add_post' %}">Add post</a>
                   </li>
-                  {% if category_menu %}
+
                   <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Categories
                       </a>
                       <ul class="dropdown-menu">
+                        {% if category_menu %}
                         {% for category in category_menu %}
                             <li><a class="dropdown-item" href="{% url 'category' category.name %}">{{category.name}}</a></li>
                         {% endfor %}
-
+                        {% endif %}
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'add_category' %}">Add Category</a></li>
                       </ul>
                   </li>
-                  {% endif %}
+
                   <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Settings

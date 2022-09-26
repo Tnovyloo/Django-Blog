@@ -54,14 +54,17 @@
     <h2>Comments</h2>
     {% if not post.comments.all %}
     No comments yet.
+    <a href="{% url 'add_comment' post.id %}">Add comment</a>
     {% else %}
-        <a href="">Add comment</a>
+        <a href="{% url 'add_comment' post.id %}">Add comment</a>
+        <br>
         {% for comment in post.comments.all %}
         <div class="card">
           <div class="card-body">
             {{comment.body}}
           </div>
         </div>
+        <br>
         {% endfor %}
     {% endif %}
     <br>

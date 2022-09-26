@@ -32,6 +32,7 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = "Categories"
 
+
 class Post(models.Model):
     title = models.CharField(max_length=255)
     header_image = models.ImageField(null=True, blank=True, upload_to="images/headers")
