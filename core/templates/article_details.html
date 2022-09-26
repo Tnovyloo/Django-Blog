@@ -37,8 +37,8 @@
     </form>
     <br>
     <a href="{% url 'index' %}" class="btn btn-light">Back</a>
-    <hr>
     <br>
+    <hr>
     {% if post.author.profile %}
     <div class="card" style="width: 18rem;">
       <img src="{{post.author.profile.profile_pic.url}}" class="card-img-top" alt="...">
@@ -49,13 +49,14 @@
           </div>
     </div>
     {% endif %}
-    <br>
     <hr>
     <h2>Comments</h2>
     {% if not post.comments.all %}
     No comments yet.
     <a href="{% url 'add_comment' post.id %}">Add comment</a>
+    <br>
     {% else %}
+        <br>
         <a href="{% url 'add_comment' post.id %}">Add comment</a>
         <br>
         {% for comment in post.comments.all %}
