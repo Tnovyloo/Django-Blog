@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post, Category, Comment
+from .models import Post, Category, Comment, Profile, User
 from .forms import PostForm, UpdatePostForm, AddCategoryForm, AddCommentForm
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
@@ -17,6 +17,18 @@ class HomeView(ListView):
     #     # context = {"category_menu": category_menu}
     #     context["category_menu"] = category_menu
     #     return context
+
+class SearchView(ListView):
+    model = Post
+    template_name = 'search_user.html'
+    cats = Category.objects.all()
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search = self.request.GET.get('search')
+        if search:
+            data = User.objects.filter(username=search)
+        return data
 
 def category_view(request, category):
     category_posts = Post.objects.filter(category=category.replace('-', ''))
