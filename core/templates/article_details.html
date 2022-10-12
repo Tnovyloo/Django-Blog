@@ -24,8 +24,9 @@
     <hr>
     <br/>
     {{post.body|safe }}
+    <hr>
     <br/><br/>
-    <br>
+
     <form action="{% url 'like_post' post.pk %}" method="POST">
         {% csrf_token %}
 

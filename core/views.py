@@ -23,12 +23,30 @@ class SearchView(ListView):
     template_name = 'search_user.html'
     cats = Category.objects.all()
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     search = self.request.GET.get('search')
+    #
+    #     if search:
+    #         data = User.objects.filter(username=search)
+    #
+    #         # context = {'user_search': search,
+    #         #            'data': data}
+    #     # else:
+    #         # context = {'user_search': search}
+    #
+    #     # return context
+    #     return data
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
         search = self.request.GET.get('search')
-        if search:
-            data = User.objects.filter(username=search)
-        return data
+        context['data'] = User.objects.filter(username=search)
+        context['search'] = search
+
+        return context
+
 
 def category_view(request, category):
     category_posts = Post.objects.filter(category=category.replace('-', ''))

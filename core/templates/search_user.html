@@ -4,15 +4,14 @@
 <h1>Category: {{category}}</h1>
     {% if data %}
         {% for user in data %}
-            div class="card" style="width: 18rem;">
-        <img src="{{post.author.profile.profile_pic.url}}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">{{post.author.username}}</h5>
-            <p class="card-text">{{post.author.profile.bio}}</p>
-            <a href="{% url 'show_profile_page' post.author.profile.id %}" class="btn btn-primary">Go to profile</a>
-          </div>
+            <img src="{{user.profile.profile_pic.url}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{post.author.username}}</h5>
+                <p class="card-text">{{post.author.profile.bio}}</p>
+                <a href="{% url 'show_profile_page' user.profile.id %}" class="btn btn-primary">Go to profile</a>
+            </div>
         {% endfor %}
     {% else %}
-        <h1>There is no results for searched user.</h1>
+        <h1>There is no results for searched {{search}} user.</h1>
     {% endif %}
 {% endblock %}
