@@ -1,15 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Category: {{category}}</h1>
+<h1>User results for '{{search}}'</h1>
     {% if data %}
         {% for user in data %}
-            <img src="{{user.profile.profile_pic.url}}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">{{post.author.username}}</h5>
-                <p class="card-text">{{post.author.profile.bio}}</p>
-                <a href="{% url 'show_profile_page' user.profile.id %}" class="btn btn-primary">Go to profile</a>
-            </div>
+            {% if user.profile %}
+                <div class="card" style="width: 18rem;">
+                  <img src="{{user.profile.profile_pic.url}}" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">{{user.username}}</h5>
+                        <p class="card-text">{{user.profile.bio}}</p>
+                        <a href="{% url 'show_profile_page' user.profile.id %}" class="btn btn-primary">Go to profile</a>
+                      </div>
+                </div>
+            {% else %}
+                <div class="card" style="width: 18rem;">
+            <!--      <img src="{{post.author.profile.profile_pic.url}}" class="card-img-top" alt="...">-->
+                      <div class="card-body">
+                        <h5 class="card-title">Post owner has no profile title.</h5>
+                        <p class="card-text">Post owner has no profile bio.</p>
+                      </div>
+                </div>
+            {% endif %}
         {% endfor %}
     {% else %}
         <h1>There is no results for searched {{search}} user.</h1>
